@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %} History Of Last 100 Transactions {% endblock %}}
+
+{% block main %}
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Shares</th>
+            <th>Date & Time</th>
+        </tr>
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction["status"] }}</td>
+                <td>{{ transaction["symbol"] }}</td>
+                <td>{{ transaction["price"]|usd }}</td>
+                <td>{{ transaction["shares"] }}</td>
+                <td>{{ transaction["transacted"] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

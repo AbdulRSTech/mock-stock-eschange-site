@@ -1,0 +1,33 @@
+cs50
+Flask
+Flask-Session
+pytz
+requests
+
+database schema:
+
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE UNIQUE INDEX username ON users (username);
+CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    symbol TEXT NOT NULL,
+    name TEXT NOT NULL,
+    price REAL NOT NULL,
+    shares INTEGER NOT NULL,
+    status TEXT NOT NULL CHECK(status IN ('BOUGHT', 'SOLD')),
+    total REAL NOT NULL,
+    transacted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+CREATE INDEX idx_transactions_user_id ON transactions(user_id);
+CREATE INDEX idx_transactions_symbol ON transactions(symbol);
+CREATE TABLE portfolio (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    symbol TEXT NOT NULL,
+    shares INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    UNIQUE(user_id, symbol)
+);
+CREATE INDEX portofolio_user_ids ON portfolio(user_id);
